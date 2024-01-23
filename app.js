@@ -76,6 +76,8 @@ async function checkUrlExistence(url) {
   
     // Throttle the handleUrlFormatCheck function to avoid frequent validations
     const throttledHandleUrlFormatCheck = throttle(handleUrlFormatCheck, 500);
+    const throttledHandleUrlExistenceCheck = throttle(handleUrlExistenceCheck, 10000);
+
   
     // Event listener for user input
     inputElement.addEventListener('input', () => {
@@ -83,6 +85,6 @@ async function checkUrlExistence(url) {
     });
   
     // Event listener for checkButton click
-    checkButton.addEventListener('click', handleUrlExistenceCheck);
+    checkButton.addEventListener('click', throttledHandleUrlExistenceCheck);
   });
   
