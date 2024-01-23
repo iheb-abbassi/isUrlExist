@@ -1,12 +1,8 @@
-// app.js
 
-// Mock server function for URL existence check
 async function checkUrlExistence(url) {
-    // Simulate server response delay
     await new Promise((resolve) => setTimeout(resolve, 500));
   
-    // Mock server response
-    const magicalWord = 'tuta'; // Choose your own magical word
+    const magicalWord = 'tuta'; 
   
     if (url.includes(magicalWord)) {
       if (url.endsWith('.txt')) {
@@ -15,12 +11,10 @@ async function checkUrlExistence(url) {
         return { exists: true, type: 'folder' };
       }
     } else {
-      // Simulate a 404 error for non-existent links
       return { exists: false, type: '404 error' };
     }
   }
   
-  // Throttle function to limit the rate of server requests
   function throttle(func, delay) {
     let lastExecTime = 0;
   
@@ -34,7 +28,6 @@ async function checkUrlExistence(url) {
     };
   }
   
-  // Entry point for the application
   document.addEventListener('DOMContentLoaded', function () {
     const inputElement = document.getElementById('urlInput');
     const resultElement = document.getElementById('result');
@@ -44,22 +37,17 @@ async function checkUrlExistence(url) {
     const handleUrlFormatCheck = () => {
       const url = inputElement.value;
   
-      // Updated URL format validation
       const urlRegex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.){1,3}[a-zA-Z]{1,}(\/[^\s]*)?$/;
       const isValidUrl = urlRegex.test(url);
   
-      // Provide feedback to the user while typing
       resultElement.textContent = isValidUrl ? 'URL is valid' : 'Invalid URL format';
   
-      // Enable the button only if the URL format is valid
       checkButton.disabled = !isValidUrl;
     };
   
-    // Function to handle URL existence check
     const handleUrlExistenceCheck = async () => {
       const url = inputElement.value;
   
-      // Mock server call for URL existence check
       try {
         const response = await checkUrlExistence(url);
   
@@ -74,17 +62,14 @@ async function checkUrlExistence(url) {
       }
     };
   
-    // Throttle the handleUrlFormatCheck function to avoid frequent validations
     const throttledHandleUrlFormatCheck = throttle(handleUrlFormatCheck, 500);
     const throttledHandleUrlExistenceCheck = throttle(handleUrlExistenceCheck, 10000);
 
   
-    // Event listener for user input
     inputElement.addEventListener('input', () => {
       throttledHandleUrlFormatCheck();
     });
   
-    // Event listener for checkButton click
     checkButton.addEventListener('click', throttledHandleUrlExistenceCheck);
   });
   
