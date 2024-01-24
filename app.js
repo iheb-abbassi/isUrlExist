@@ -52,7 +52,7 @@ async function checkUrlExistence(url) {
         const response = await checkUrlExistence(url);
   
         if (response.exists) {
-          resultElement.textContent = `URL exists, type: ${response.type || 'unknown'}`;
+          resultElement.textContent = `URL exists, type: ${response.type}`;
         } else {
           resultElement.textContent = `URL does not exist: ${response.type}`;
         }
