@@ -18,14 +18,15 @@ async function checkUrlExistence(url) {
   function throttle(func, delay) {
     let lastExecTime = 0;
   
-    return function (...args) {
+    return function () {
       const currentTime = Date.now();
-  
+    
       if (currentTime - lastExecTime > delay) {
         lastExecTime = currentTime;
-        func.apply(this, args);
+        func.apply(this, arguments); 
       }
     };
+    
   }
   
   document.addEventListener('DOMContentLoaded', function () {
@@ -33,7 +34,6 @@ async function checkUrlExistence(url) {
     const resultElement = document.getElementById('result');
     const checkButton = document.getElementById('checkButton');
   
-    // Function to handle URL format check
     const handleUrlFormatCheck = () => {
       const url = inputElement.value;
   
@@ -54,7 +54,7 @@ async function checkUrlExistence(url) {
         if (response.exists) {
           resultElement.textContent = `URL exists, type: ${response.type || 'unknown'}`;
         } else {
-          resultElement.textContent = 'URL does not exist';
+          resultElement.textContent = `URL does not exist: ${response.type}`;
         }
       } catch (error) {
         console.error('Error checking URL existence:', error);
